@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+   <head>
+     <link rel = "stylesheet" href = "style1.css"/>
+	 <meta charset = "UTF-8">
+	 
+	 <script>
+	      //function OnIt(){
+	      	function OnIt(){
+
+
+  					if (sessionStorage.detail_db === undefined) {
+
+  						console.log("No storage setup")
+
+  						var db = {
+  							details : []
+  							
+  						}
+  						
+  					};
+
+  					 // Encode object as a string
+         		 var dbString = JSON.stringify(db);
+
+         		 sessionStorage.detail_db = dbString;
+  				
+  				
+  				else{
+  					console.log("Already contains storage");
+  				}
+	      	}
+		
+	      //this function strips off use of symbols and operators when entering names
+	      function lettersOnly(input){
+		   var  regExpression = /[^a-z]/gi;
+		   input.value = input.value.replace(regExpression, "");
+		  } 
+		  //show red for an incorrect email format and green for correct format
+		  function checkEmail(input){
+		  var emailElement = document.getElementById("emailAdress");
+		  var emailValue = emailElement.value;
+		  var regex = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+         
+		 if(emailValue.match(regex)){
+         emailElement.style.border = "2px solid green";
+		 return true
+		     }
+			 else{
+			 emailElement.style.border = "2px solid red";
+			 emailElement.focus();
+			 return false;
+			 }
+		  }
+		 //On event handler
+	    function submitDetails(){
+	        var nameElement = document.getElementById("nameField");
+			var nameValue = nameElement.value;
+			var emailElement = document.getElementById("emailAdress");
+			var emailValue = emailElement.value;
+			var phoneElement = document.getElementById("phoneField");
+			var phoneValue = phoneElement.value;
+			var addressElement = document.getElementById("line1");
+			var addressValue = addressElement.value;
+			   
+			if ( (nameValue!="") && (emailValue!="") &&(phoneValue!="")){
+			
+			   if (!isNaN(phoneValue)){
+			  
+			      }
+				  else{
+			          alert("Invalid phone number");
+					  return false;
+			     }
+				 
+			 }else
+			     {
+			     alert("Please Enter all required details");
+			     return false;
+			}
+			   
+		  }
+		  function Save(){
+		      var rooms = [];
+			   function Room(size, price, status){
+			     this.size = size;
+				 this.price = price;
+				 this.status = status;
+			   }
+			   var ensuite = new Room("single bed", "£50", "available");
+			   localStorage.rooms = JSON.stringify(rooms);
+			   var html5docs = JSON.parse(localStorage.rooms);
+               
+			   display(rooms);
+		  }
+		  function display(rooms){
+		    var accomm = JSON.parse(localStorage.rooms);
+		    alert ("rooms available" + accomm);
+		  }
+		  
+		  
+	 </script>
+	 
+   </head> 
+
+   <body onload = "OnIt()">
+     <form name= "form2" action = "cardtest.html">
+	   <fieldset>
+	      <h3>Provide Customer Details</h3>
+		     First Name<br>
+		     <input type = "text" id = "nameField" name = "firstName" placeholder = "firstname" onkeyup= "lettersOnly(this)" required></input><br>
+		     Last Name<br>
+			 <input type = "text" id = "lastName" name="lastName" placeholder = "surname" onkeyup = "lettersOnly(this)" ></input><br>
+			 Sex:<br>
+			 <select>
+			      <option value="Male">M</option>
+                  <option value="Female">F</option>
+			 </select><br>
+		     Address Line 1<br>
+			 <input type = "text" id = "line1" placeholder = "house&street" required></input><br>
+			 Address Line 2<br>
+			 <input type = "text"></input><br>
+			 City<br>
+			 <input type = "text"></input><br>
+			 Post Code<br>
+			 <input type = "text" id ="code" required></input><br>
+		     Phone:<br>
+		     <input type = "text" id = "phoneField" placeholder = "phone number" required></input><br>
+		     Email address<br>
+			 <input type = "text" id = "emailAdress" onchange = "checkEmail(this)" required></input><br><br>
+     
+			 <button type = "submit" value= "submit" onclick = "submitDetails()"> Book Now </button>
+			 <button type = "submit" value= "submit" onclick = "save()"> Save </button>
+	   </fieldset>
+	 </form>
+   
+   </body>
+</html>

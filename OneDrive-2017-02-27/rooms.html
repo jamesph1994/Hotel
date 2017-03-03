@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<head>
+
+	<div class="navbar">
+				<ul>
+  					<li><a class="header" href="home.html">Home</a></li>
+  					<li><a href="rooms.html">Rooms</a></li>
+  					<li><a href="receipt.html">receipt test</a></li>
+  					<li><a href="cardtest.html">card</a></li>
+  					<li><a href="bookARoom.html">book</a></li>
+				</ul>
+	</div>	
+
+	<title>Rooms</title>
+	<h1>- Please select a Room -</h1>
+
+	<script type="text/javascript">
+
+	function init() {
+      
+        var newMember = {};
+        
+        // Iterate through each key-value pair in the url string and store in the 'newMember' object declared above
+        window.location.search.substr(1).split('&').forEach(
+        
+          function(item) {
+          
+            let kvPair = item.split('=');
+            newMember[kvPair[0]] = kvPair[1];
+          }
+        );
+          
+        function myFunction() {
+   	 var x = document.createElement("IMG");
+    x.setAttribute("src", "images/room1.jpg");
+    x.setAttribute("width", "304");
+    x.setAttribute("height", "228");
+    x.setAttribute("alt", "The Pulpit Rock");
+    document.body.appendChild(x);
+}
+        // Add new member...
+        
+        // If the database has been deleted from sessionStorage then re-create it
+        if (sessionStorage.hotel_db === undefined) {
+
+          sessionStorage.hotel_db = JSON.stringify({ user : [] });
+        }
+
+        // Get database string...
+        var dbString = sessionStorage.hotel_db;
+          
+        // ... and reconstruct the main database object
+        var db = JSON.parse(dbString);
+        
+        // Store new member object in members array
+        db.user.push(newMember);
+        
+        // Re-encode member array object as a string
+        dbString = JSON.stringify(db);
+
+        // Store updated database string back into sessionStorage
+        sessionStorage.hotel_db = dbString;
+        
+      
+    
+		var roomsDiv = document.getElementById("rooms");
+		
+		
+
+		var room1 = { name: 'room1', price: 50, beds: 1, bathrooms: 1}
+		var room2 = { name: 'room2', price: 80, beds: 2, bathrooms: 1}
+		var room3 = { name: 'room3', price: 99, beds: 2, bathrooms: 1}
+		var room4 = { name: 'room4', price: 110, beds: 2, bathrooms: 1}
+		var room5 = { name: 'room5', price: 130, beds: 2, bathrooms: 2}
+		var room6 = { name: 'room6', price: 150, beds: 3, bathrooms: 2}
+
+		var rooms = [room1, room2, room3, room4, room5, room6]
+		console.log(Object.values(rooms));
+
+		for(var i = 0; i < rooms.length; i++){
+
+		var allRooms = rooms[i];
+
+		//console.log(allRooms.price + " " + allRooms.name);
+
+		var priceRange = db.user[db.user.length - 1].price;
+
+		if(allRooms.price <= priceRange){
+			
+			console.log(allRooms.price + " " + allRooms.name);
+			
+			var roomsList = document.createElement("ul");
+            var roomsEntry = document.createElement("p1");
+            
+            roomsEntry.innerHTML = "Room Name: " + allRooms.name + "<br/>" + "Room Price: " + "£" + allRooms.price + "<br/>" + "No of Beds: " +
+            allRooms.beds + "<br/>" + "No of Bathrooms: " + allRooms.bathrooms + allRooms.images;
+              
+            var buttonList = document.createElement("button");
+            buttonList.innerHTML = "Select Room";
+
+            roomsList.appendChild(roomsEntry);
+            roomsDiv.appendChild(roomsList);
+			roomsDiv.appendChild(buttonList);
+		
+			}
+
+		}
+     }
+
+
+	</script>
+
+</head>
+
+<body onload="init()" onload="myFunction()">
+
+	<form id="rooms" action="bookARoom.html" method="get">
+	
+	</form>	
+
+</body>
+
+</html>

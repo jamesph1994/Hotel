@@ -1,0 +1,141 @@
+<html>
+<head>
+
+<script>
+
+  function init() {
+      
+        var newDetails = {};
+        
+        // Iterate through each key-value pair in the url string and store in the 'newMember' object declared above
+        window.location.search.substr(1).split('&').forEach(
+        
+          function(item) {
+          
+            let kvPair = item.split('=');
+            newDetails[kvPair[0]] = kvPair[1];
+          }
+        );
+          
+        
+        // Add new member...
+        
+        // If the database has been deleted from sessionStorage then re-create it
+        if (sessionStorage.detail_db === undefined) {
+
+          sessionStorage.detail_db = JSON.stringify({ details : [] });
+        }
+
+        // Get database string...
+        var dbString = sessionStorage.detail_db;
+          
+        // ... and reconstruct the main database object
+        var db = JSON.parse(dbString);
+        
+        // Store new member object in members array
+        db.details.push(newDetails);
+        
+        // Re-encode member array object as a string
+        dbString = JSON.stringify(db);
+
+        // Store updated database string back into sessionStorage
+        sessionStorage.detail_db = dbString;
+        
+        // Report the new member has been added successfully
+        document.getElementById("message").innerHTML = 'Element Added Successfully';
+    
+     }
+
+function testCreditCard(input) {
+ var myCardNo = document.forms["BookForm"] ["CardNumber"].value;
+ //console.log(myCardNo);
+ //console.log(typeof myCardNo);
+  if (myCardNo.match(/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/)) 
+  {
+  document.getElementById('CardNumber').style.border = "solid 3px green";
+  return true;
+  } 
+  else{
+  document.getElementById('CardNumber').style.border = "solid 3px red";
+  return false;
+ }
+// var regExpo = /[^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$]/;
+// input.value = input.value.replace(regExpo, "");
+}
+function testCCV() {
+  var myCardCCV = document.forms["BookForm"] ["CCV"].value;
+  if (myCardCCV.match(/^[0-9]{3,4}$/)) {
+  document.getElementById('CCV').style.border = "solid 3px green";
+  return true;
+  } 
+  else {
+  document.getElementById('CCV').style.border = "solid 3px red";
+  return false;
+  }
+}
+
+function validateName() {
+    var x = document.forms["BookForm"]["FirstName"].value;
+	console.log(x);
+	console.log(typeof x);
+    if (x.match(/^[A-Za-z]+$/))
+	{
+	document.getElementById('FirstName').style.border = "solid 3px green";
+	return true;
+	}
+	else
+	{
+	document.getElementById('FirstName').style.border = "solid 3px red";
+    return false;
+    }
+}
+function validatemonth() {
+	var month = document.forms["BookForm"]["expmonth"].value;
+	if (12>=month){
+	document.getElementById('expmonth').style.border = "solid 3px green";
+	return true;
+	}
+	else {
+	document.getElementById('expmonth').style.border = "solid 3px red";
+	return false;
+	}
+}
+function validateyear() {
+	var year = document.forms["BookForm"]["expyear"].value;
+	if (year.match(/^\d\d$/)){
+	document.getElementById('expyear').style.border = "solid 3px green";
+	return true;
+	}
+	else{
+	document.getElementById('expyear').style.border = "solid 3px red";
+	return false;
+	}
+}
+
+
+</script>
+	
+</head>
+<body onload="init()">
+
+<div id="message"></div>
+
+<form name="BookForm" action="receipt.html">
+  First name:
+  <input type="text" name="FirstName" id="FirstName"  onchange="validateName()"/><br> <!--name is the name of the field which is called firstname -->
+  CCV (Security Code):
+  <input type="text" name="CCV" id="CCV" onchange="testCCV()"/><br>
+  Expiry Date:
+  <input type="text" id="expmonth" name="expmonth" min="1" max="12" onchange="validatemonth()"/><input type="text" id="expyear" name="expyear" onchange="validateyear()"/><br>
+  Card Number:
+  <input type="text" name="CardNumber" id="CardNumber" onchange="testCreditCard(this)"/><br>
+  <button type="submit" value="submit"> Submit</button>
+</form>
+
+<FORM name="GoBack"><INPUT Type="button" href="receipt.html"></FORM>
+
+
+
+</body>
+
+</html>
