@@ -82,15 +82,15 @@
           
         }
       }
- var detailList = document.getElementById("list2");
+          var detailList = document.getElementById("list2");
 
           if (sessionStorage.detail_db === undefined) {
         
           var h = document.createElement("h3");
           h.innerHTML = "NO MEMBER DATABASE FOUND";
           detailList.appendChild(h);
-        }
-        else {
+           }
+         else {
         
           // Get member database as a string...
           var dbString = sessionStorage.detail_db;
