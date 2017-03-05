@@ -43,6 +43,7 @@
 
   					var D = new Date();
 
+  					 var ds = D.toISOString().slice(0, 10); // Get YYYY-MM-DD portion of ISO date-time string
   					var monthString;
   					var m = D.getMonth() + 1;
 
@@ -57,9 +58,11 @@
 
   					var dateString = D.getFullYear() + "-" + monthString + "-" + D.getDate();
 
-  					date1Field.value = dateString;
-  					date1Field.min = dateString;
+  					date1Field.value = ds;
+  					date1Field.min = ds;
   				}
+
+
 
   				function newDate(){		
 
@@ -131,7 +134,7 @@
 				<input type="date" name="checkIn" class="form" id="checkInField"  onchange="newDate();" required/> <br>
 
 				<label>Check out date: </label> <br>
-				<input type="date" name="checkOut" class="form" id="checkOutField" placeholder="DD/MM/YYYY"  required/> <br>
+				<input type="date" name="checkOut" class="form" id="checkOutField" placeholder="dd-mm-yyyy"  required/> <br>
 
 				<label>Number of Guests: </label> <br>
 				<input type="number" name="numGuests" class="form" id="guestsField" min="1" max="12" value="0"/><br>
